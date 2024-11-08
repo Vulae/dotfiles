@@ -7,6 +7,8 @@
 # Don't ignore this file!
 !/.gitignore
 
+!/README.md
+
 # Dotfiles for non-sensitive stuff
 !/nvim/
 !/nvim/**/*
