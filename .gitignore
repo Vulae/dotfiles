@@ -1,0 +1,21 @@
+# I actually have no clue on how to manage dotfiles.
+# This just seems like the easiest way.
+
+# Ignore everything as default
+*
+
+# Don't ignore this file!
+!/.gitignore
+
+# Dotfiles for non-sensitive stuff
+!/nvim/
+!/nvim/**/*
+!/kitty/
+!/kitty/**/*
+!/neofetch/
+!/neofetch/**/*
+!/niri/
+!/niri/**/*
+!/swaybg-startup.sh
+!/fuzzel/
+!/fuzzel/**/*
