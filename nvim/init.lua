@@ -106,6 +106,17 @@ end
 
 vim.opt.swapfile = false
 
+vim.g.noexpandtab = true
+vim.g.tabstop = 4
+vim.g.shiftwidth = 4
+vim.g.softtabstop = -1
+vim.g.smarttab = true
+vim.cmd("set noexpandtab")
+vim.cmd("set tabstop=4")
+vim.cmd("set shiftwidth=4")
+vim.cmd("set softtabstop=-1")
+vim.cmd("set noexpandtab")
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -1027,10 +1038,54 @@ require("lazy").setup({
 			use_icons = false,
 		},
 	},
+	-- {
+	-- 	"NStefan002/screenkey.nvim",
+	-- 	lazy = false,
+	-- 	version = "*", -- or branch = "dev", to use the latest commit
+	-- },
 	{
-		"NStefan002/screenkey.nvim",
-		lazy = false,
-		version = "*", -- or branch = "dev", to use the latest commit
+		"RaafatTurki/hex.nvim",
+		init = function()
+			require("hex").setup()
+		end,
+	},
+	{
+		"vyfor/cord.nvim",
+		branch = "client-server",
+		build = ":Cord fetch",
+		opts = {
+			hooks = {
+				on_update = function(opts)
+					local function is_subpath(parent, child)
+						parent = vim.fn.fnamemodify(parent, ":p")
+						child = vim.fn.fnamemodify(child, ":p")
+						parent = parent:gsub("/$", "")
+						child = child:gsub("/$", "")
+						return vim.startswith(child, parent)
+					end
+
+					local whitelist = {
+						"~/Projects/",
+						"~/.config/",
+					}
+
+					local is_in_whitelist = false
+					for _, whitelist_path in ipairs(whitelist) do
+						local result = is_subpath(whitelist_path, opts.workspace_dir)
+						if result then
+							is_in_whitelist = true
+						end
+					end
+
+					if is_in_whitelist then
+						opts.manager:resume()
+					else
+						opts.manager:skip_update()
+						opts.manager:hide()
+					end
+				end,
+			},
+		},
 	},
 	{
 		"goolord/alpha-nvim",
