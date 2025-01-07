@@ -21,3 +21,4 @@
 !/swaybg-startup.sh
 !/fuzzel/
 !/fuzzel/**/*
+!/.XCompose
